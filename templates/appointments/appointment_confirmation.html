@@ -1,0 +1,37 @@
+<!-- templates/appointments/appointment_confirmation.html -->
+{% extends 'base.html' %}
+
+{% block title %}Appointment Confirmation - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>Appointment Confirmation</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    Your appointment has been booked successfully!
+                </div>
+                
+                <div class="mb-3">
+                    <h4>Appointment Details</h4>
+                    <p><strong>Doctor:</strong> Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</p>
+                    <p><strong>Specialization:</strong> {{ appointment.doctor.specialization }}</p>
+                    <p><strong>Date:</strong> {{ appointment.availability_slot.date }}</p>
+                    <p><strong>Time:</strong> {{ appointment.availability_slot.start_time }} - {{ appointment.availability_slot.end_time }}</p>
+                    <p><strong>Reason:</strong> {{ appointment.reason }}</p>
+                    {% if appointment.notes %}
+                        <p><strong>Notes:</strong> {{ appointment.notes }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid">
+                    <a href="{% url 'patients:dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

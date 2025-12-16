@@ -1,0 +1,47 @@
+<!-- templates/patients/doctors_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Doctors List - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>Find a Doctor</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <form method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search by specialization" name="specialization" value="{{ specialization }}">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            <a href="{% url 'patients:doctors_list' %}" class="btn btn-outline-secondary">Clear</a>
+                        </div>
+                    </form>
+                </div>
+                
+                {% if doctors %}
+                    <div class="row">
+                        {% for doctor in doctors %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
+                                        <p class="card-text">{{ doctor.specialization }}</p>
+                                        <p class="card-text">{{ doctor.qualification }}</p>
+                                        <p class="card-text">Experience: {{ doctor.experience_years }} years</p>
+                                        <a href="{% url 'patients:doctor_details' doctor.id %}" class="btn btn-primary">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No doctors found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

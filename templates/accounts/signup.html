@@ -1,0 +1,23 @@
+<!-- templates/accounts/signup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Sign Up</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <p>Are you a doctor or a patient?</p>
+                    <a href="{% url 'accounts:doctor_signup' %}" class="btn btn-primary me-2">Doctor Sign Up</a>
+                    <a href="{% url 'accounts:patient_signup' %}" class="btn btn-success">Patient Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
