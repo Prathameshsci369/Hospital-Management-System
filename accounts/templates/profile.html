@@ -1,0 +1,80 @@
+<!-- templates/accounts/profile.html -->
+{% extends 'base.html' %}
+
+{% block title %}Profile - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">{{ role }} Profile</h2>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% else %}
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Username:</strong></div>
+                        <div class="col-sm-9">{{ user.username }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Name:</strong></div>
+                        <div class="col-sm-9">{{ user.first_name }} {{ user.last_name }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Email:</strong></div>
+                        <div class="col-sm-9">{{ user.email }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Phone:</strong></div>
+                        <div class="col-sm-9">{{ user.phone_number }}</div>
+                    </div>
+                    
+                    {% if profile %}
+                        {% if role == 'Doctor' %}
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Specialization:</strong></div>
+                                <div class="col-sm-9">{{ profile.specialization }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Qualification:</strong></div>
+                                <div class="col-sm-9">{{ profile.qualification }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Experience:</strong></div>
+                                <div class="col-sm-9">{{ profile.experience_years }} years</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Consultation Fee:</strong></div>
+                                <div class="col-sm-9">${{ profile.consultation_fee }}</div>
+                            </div>
+                        {% elif role == 'Patient' %}
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Date of Birth:</strong></div>
+                                <div class="col-sm-9">{{ profile.date_of_birth }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Emergency Contact:</strong></div>
+                                <div class="col-sm-9">{{ profile.emergency_contact }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Medical History:</strong></div>
+                                <div class="col-sm-9">{{ profile.medical_history }}</div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                
+                <div class="mt-4">
+                    {% if role == 'Doctor' %}
+                        <a href="{% url 'doctors:dashboard' %}" class="btn btn-primary">Dashboard</a>
+                    {% elif role == 'Patient' %}
+                        <a href="{% url 'patients:dashboard' %}" class="btn btn-primary">Dashboard</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
