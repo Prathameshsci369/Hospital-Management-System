@@ -1,0 +1,56 @@
+<!-- templates/appointments/appointment_confirmation.html -->
+{% extends 'base.html' %}
+
+{% block title %}Appointment Confirmation - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h2 class="text-center">Appointment Confirmed!</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    Your appointment has been successfully booked and added to your Google Calendar.
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h5>Appointment Details</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Doctor:</th>
+                                <td>Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td>{{ appointment.availability_slot.date }}</td>
+                            </tr>
+                            <tr>
+                                <th>Time:</th>
+                                <td>{{ appointment.availability_slot.start_time }} - {{ appointment.availability_slot.end_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>Reason:</th>
+                                <td>{{ appointment.reason }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Calendar Integration</h5>
+                        <div class="alert alert-info">
+                            This appointment has been automatically added to your Google Calendar.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-between">
+                    <a href="{% url 'patients:dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+                    <a href="{% url 'patients:doctors_list' %}" class="btn btn-outline-secondary">Find More Doctors</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

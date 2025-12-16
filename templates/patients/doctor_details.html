@@ -1,0 +1,65 @@
+<!-- templates/patients/doctor_details.html -->
+{% extends 'base.html' %}
+
+{% block title %}Doctor Details - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>Doctor Details</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
+                                <p class="card-text">{{ doctor.specialization }}</p>
+                                <p class="card-text">{{ doctor.qualification }}</p>
+                                <p class="card-text">Experience: {{ doctor.experience_years }} years</p>
+                                <p class="card-text">Consultation Fee: ${{ doctor.consultation_fee }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4>Available Slots</h4>
+                        {% if available_slots %}
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for slot in available_slots %}
+                                            <tr>
+                                                <td>{{ slot.date }}</td>
+                                                <td>{{ slot.start_time }}</td>
+                                                <td>{{ slot.end_time }}</td>
+                                                <td>
+                                                    <a href="{% url 'appointments:book_appointment' slot.id %}" class="btn btn-primary">Book</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p>No available slots.</p>
+                        {% endif %}
+                        <div class="mt-3">
+                            <a href="{% url 'patients:doctors_list' %}" class="btn btn-secondary">Back to Doctors List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

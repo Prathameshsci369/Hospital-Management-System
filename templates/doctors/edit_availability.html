@@ -1,0 +1,59 @@
+<!-- templates/doctors/edit_availability.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Availability - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>Edit Availability</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ slot.date }}" required min="{{ today }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_time" class="form-label">Start Time</label>
+                        <input type="time" class="form-control" id="start_time" name="start_time" value="{{ slot.start_time }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_time" class="form-label">End Time</label>
+                        <input type="time" class="form-control" id="end_time" name="end_time" value="{{ slot.end_time }}" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Update Availability</button>
+                    </div>
+                </form>
+                <div class="mt-3">
+                    <a href="{% url 'doctors:manage_availability' %}" class="btn btn-secondary">Back to Availability</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+        
+        // Validate that end time is after start time
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const startTime = document.getElementById('start_time').value;
+            const endTime = document.getElementById('end_time').value;
+            
+            if (startTime >= endTime) {
+                event.preventDefault();
+                alert('End time must be after start time.');
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
