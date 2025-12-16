@@ -65,8 +65,9 @@ GitPython==3.1.45
 google-ai-generativelanguage==0.6.15
 google-api-core==2.28.1
 google-api-python-client==2.185.0
-google-auth==2.42.0
+google-auth==2.41.1
 google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.3
 google-cloud-core==2.5.0
 google-cloud-storage==2.19.0
 google-crc32c==1.7.1
@@ -129,6 +130,7 @@ nvidia-cusolver-cu11==11.4.1.48
 nvidia-cusparse-cu11==11.7.5.86
 nvidia-nccl-cu11==2.21.5
 nvidia-nvtx-cu11==11.8.86
+oauthlib==3.3.1
 ollama==0.6.1
 omegaconf==2.3.0
 onnx==1.19.1
@@ -171,6 +173,7 @@ pytz==2025.2
 PyYAML==6.0.3
 regex==2025.11.3
 requests==2.32.5
+requests-oauthlib==2.0.0
 requests-toolbelt==1.0.0
 rest-framework-simplejwt==0.0.2
 rich==13.9.4
