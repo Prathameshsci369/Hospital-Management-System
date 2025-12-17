@@ -4,7 +4,7 @@
 
 # 🏥 Mini Hospital Management System
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)
 ![Django](https://img.shields.io/badge/Django-5.2.8-blue.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.13-blue.svg)
