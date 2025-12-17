@@ -3,57 +3,313 @@
 
 {% block title %}Patient Dashboard - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .dashboard-container {
+        padding: 30px 0;
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, #FF6B6B 0%, #ee5a52 100%),
+                    url('https://images.unsplash.com/photo-1576091160499-112ba8d25d1d?w=1200&h=400&fit=crop') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 50px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        border-color: #FF6B6B;
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: #7f8c8d;
+        font-weight: 600;
+    }
+
+    .appointments-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .appointments-header {
+        background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+        color: white;
+        padding: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .appointments-header h3 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    .appointments-body {
+        padding: 30px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .appointments-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .appointments-table thead {
+        background: #f5f7fa;
+    }
+
+    .appointments-table th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 700;
+        color: #2c3e50;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .appointments-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+        color: #7f8c8d;
+    }
+
+    .appointments-table tr:hover {
+        background: #f9fafb;
+    }
+
+    .appointment-time {
+        color: #FF6B6B;
+        font-weight: 600;
+    }
+
+    .appointment-doctor {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .no-appointments {
+        text-align: center;
+        padding: 50px 30px;
+        color: #7f8c8d;
+    }
+
+    .no-appointments i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .btn-action {
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-primary-action {
+        background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-primary-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+    }
+
+    .btn-secondary-action {
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-secondary-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+    }
+
+    .patient-info-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+        border-left: 4px solid #FF6B6B;
+    }
+
+    .patient-info-card h4 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .patient-detail {
+        display: flex;
+        padding: 10px 0;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .patient-detail-label {
+        font-weight: 600;
+        color: #FF6B6B;
+        min-width: 120px;
+    }
+
+    .patient-detail-value {
+        color: #7f8c8d;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h2>Patient Dashboard</h2>
+<div class="dashboard-container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h1><i class="fas fa-heartbeat"></i> Patient Dashboard</h1>
+        <p>Welcome, {{ user.first_name }} {{ user.last_name }}</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Patient Info Card -->
+        <div class="col-lg-4">
+            <div class="patient-info-card">
+                <h4><i class="fas fa-user-circle"></i> Your Profile</h4>
+                <div class="patient-detail">
+                    <span class="patient-detail-label">Name:</span>
+                    <span class="patient-detail-value">{{ user.first_name }} {{ user.last_name }}</span>
+                </div>
+                <div class="patient-detail">
+                    <span class="patient-detail-label">Email:</span>
+                    <span class="patient-detail-value">{{ user.email }}</span>
+                </div>
+                <div class="patient-detail">
+                    <span class="patient-detail-label">Phone:</span>
+                    <span class="patient-detail-value">{{ user.phone_number }}</span>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-                                <p class="card-text">Patient</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <h4>Upcoming Appointments</h4>
-                        {% if upcoming_appointments %}
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Doctor</th>
-                                            <th>Reason</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for appointment in upcoming_appointments %}
-                                            <tr>
-                                                <td>{{ appointment.availability_slot.date }}</td>
-                                                <td>{{ appointment.availability_slot.start_time }} - {{ appointment.availability_slot.end_time }}</td>
-                                                <td>Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
-                                                <td>{{ appointment.reason }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            <p>No upcoming appointments.</p>
-                        {% endif %}
-                        <div class="mt-3">
-                            <a href="{% url 'patients:doctors_list' %}" class="btn btn-primary">Find Doctors</a>
-                            <a href="{% url 'appointments:my_appointments' %}" class="btn btn-secondary">All Appointments</a>
-                        </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="col-lg-8">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check stat-icon"></i>
+                        <div class="stat-number">{% if upcoming_appointments %}{{ upcoming_appointments|length }}{% else %}0{% endif %}</div>
+                        <div class="stat-label">Upcoming Appointments</div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="stat-card">
+                        <i class="fas fa-user-md stat-icon"></i>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Doctors Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Appointments -->
+    <div class="appointments-card">
+        <div class="appointments-header">
+            <h3><i class="fas fa-list"></i> Upcoming Appointments</h3>
+        </div>
+        <div class="appointments-body">
+            {% if upcoming_appointments %}
+                <div class="table-wrapper">
+                    <table class="appointments-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-clock"></i> Time</th>
+                                <th><i class="fas fa-user-md"></i> Doctor</th>
+                                <th><i class="fas fa-stethoscope"></i> Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in upcoming_appointments %}
+                                <tr>
+                                    <td>{{ appointment.availability_slot.date|date:"M d, Y" }}</td>
+                                    <td class="appointment-time">{{ appointment.availability_slot.start_time|time:"g:i A" }} - {{ appointment.availability_slot.end_time|time:"g:i A" }}</td>
+                                    <td class="appointment-doctor">Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                                    <td>{{ appointment.reason|truncatewords:5 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-appointments">
+                    <i class="fas fa-calendar-times"></i>
+                    <p><strong>No upcoming appointments</strong></p>
+                    <p>Book an appointment with a doctor to get started</p>
+                </div>
+            {% endif %}
+
+            <div class="action-buttons">
+                <a href="{% url 'patients:doctors_list' %}" class="btn-action btn-primary-action">
+                    <i class="fas fa-search"></i> Find Doctors
+                </a>
+                <a href="{% url 'appointments:my_appointments' %}" class="btn-action btn-secondary-action">
+                    <i class="fas fa-list-alt"></i> All Appointments
+                </a>
             </div>
         </div>
     </div>

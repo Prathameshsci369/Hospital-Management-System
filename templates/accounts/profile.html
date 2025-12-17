@@ -3,90 +3,330 @@
 
 {% block title %}Profile - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .profile-container {
+        padding: 40px 0;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 40px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .profile-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .profile-header p {
+        opacity: 0.9;
+        margin: 5px 0;
+    }
+
+    .profile-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .profile-card-header {
+        background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+        padding: 25px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .profile-card-header h3 {
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0;
+        font-size: 1.3rem;
+    }
+
+    .profile-card-body {
+        padding: 30px;
+    }
+
+    .profile-row {
+        display: flex;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .profile-row:last-child {
+        border-bottom: none;
+    }
+
+    .profile-label {
+        font-weight: 700;
+        color: #2c3e50;
+        flex: 0 0 40%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-value {
+        flex: 1;
+        color: #7f8c8d;
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-icon {
+        color: #4CAF50;
+        font-size: 1.1rem;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .btn-profile {
+        flex: 1;
+        min-width: 150px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-dashboard {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-dashboard:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+    }
+
+    .btn-calendar {
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-calendar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+    }
+
+    .btn-calendar.disconnected {
+        background: linear-gradient(135deg, #FF9800, #F57C00);
+    }
+
+    .btn-calendar.disconnected:hover {
+        box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5);
+    }
+
+    .error-message {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #dc3545;
+        margin-bottom: 20px;
+    }
+
+    .calendar-section {
+        background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+        padding: 25px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .calendar-section h4 {
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .calendar-status {
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border-left: 4px solid #2196F3;
+    }
+
+    @media (max-width: 768px) {
+        .profile-row {
+            flex-direction: column;
+        }
+
+        .profile-label {
+            flex: 1;
+            margin-bottom: 8px;
+        }
+
+        .profile-value {
+            flex: 1;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .btn-profile {
+            min-width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="text-center">{{ role }} Profile</h2>
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <h1><i class="fas fa-user-circle"></i> {{ role }} Profile</h1>
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+    </div>
+
+    <!-- Error Message -->
+    {% if error %}
+        <div class="error-message">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+    {% else %}
+        <!-- Basic Information Card -->
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h3><i class="fas fa-user"></i> Basic Information</h3>
             </div>
-            <div class="card-body">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% else %}
-                    <div class="row mb-3">
-                        <div class="col-sm-3"><strong>Username:</strong></div>
-                        <div class="col-sm-9">{{ user.username }}</div>
+            <div class="profile-card-body">
+                <div class="profile-row">
+                    <span class="profile-label"><i class="profile-icon fas fa-id-card"></i> Username</span>
+                    <span class="profile-value">{{ user.username }}</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label"><i class="profile-icon fas fa-user"></i> Full Name</span>
+                    <span class="profile-value">{{ user.first_name }} {{ user.last_name }}</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label"><i class="profile-icon fas fa-envelope"></i> Email</span>
+                    <span class="profile-value">{{ user.email }}</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label"><i class="profile-icon fas fa-phone"></i> Phone</span>
+                    <span class="profile-value">{{ user.phone_number }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Information Card -->
+        {% if profile %}
+            {% if role == 'Doctor' %}
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h3><i class="fas fa-stethoscope"></i> Professional Information</h3>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3"><strong>Name:</strong></div>
-                        <div class="col-sm-9">{{ user.first_name }} {{ user.last_name }}</div>
+                    <div class="profile-card-body">
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-graduation-cap"></i> Specialization</span>
+                            <span class="profile-value">{{ profile.specialization }}</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-certificate"></i> Qualification</span>
+                            <span class="profile-value">{{ profile.qualification }}</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-briefcase"></i> Experience</span>
+                            <span class="profile-value">{{ profile.experience_years }} years</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-money-bill"></i> Consultation Fee</span>
+                            <span class="profile-value">${{ profile.consultation_fee }}</span>
+                        </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3"><strong>Email:</strong></div>
-                        <div class="col-sm-9">{{ user.email }}</div>
+                </div>
+            {% elif role == 'Patient' %}
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h3><i class="fas fa-heart"></i> Medical Information</h3>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3"><strong>Phone:</strong></div>
-                        <div class="col-sm-9">{{ user.phone_number }}</div>
+                    <div class="profile-card-body">
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-birthday-cake"></i> Date of Birth</span>
+                            <span class="profile-value">{{ profile.date_of_birth }}</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-phone-alt"></i> Emergency Contact</span>
+                            <span class="profile-value">{{ profile.emergency_contact }}</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label"><i class="profile-icon fas fa-file-medical"></i> Medical History</span>
+                            <span class="profile-value">{{ profile.medical_history|default:"Not specified" }}</span>
+                        </div>
                     </div>
-                    
-                    {% if profile %}
-                        {% if role == 'Doctor' %}
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Specialization:</strong></div>
-                                <div class="col-sm-9">{{ profile.specialization }}</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Qualification:</strong></div>
-                                <div class="col-sm-9">{{ profile.qualification }}</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Experience:</strong></div>
-                                <div class="col-sm-9">{{ profile.experience_years }} years</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Consultation Fee:</strong></div>
-                                <div class="col-sm-9">${{ profile.consultation_fee }}</div> <!-- Corrected typo here -->
-                            </div>
-                        {% elif role == 'Patient' %}
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Date of Birth:</strong></div>
-                                <div class="col-sm-9">{{ profile.date_of_birth }}</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Emergency Contact:</strong></div>
-                                <div class="col-sm-9">{{ profile.emergency_contact }}</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3"><strong>Medical History:</strong></div>
-                                <div class="col-sm-9">{{ profile.medical_history }}</div>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-                
-                <div class="mt-4">
-                    {% if role == 'Doctor' %}
-                        <a href="{% url 'doctors:dashboard' %}" class="btn btn-primary">Dashboard</a>
-                    {% elif role == 'Patient' %}
-                        <a href="{% url 'patients:dashboard' %}" class="btn btn-primary">Dashboard</a>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- Google Calendar Integration Card -->
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h3><i class="fas fa-calendar-alt"></i> Google Calendar Integration</h3>
+            </div>
+            <div class="profile-card-body">
+                <div class="calendar-section">
+                    {% if user.google_calendar_token %}
+                        <div class="calendar-status">
+                            <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                            <strong style="color: #4CAF50;"> Your Google Calendar is Connected</strong>
+                            <p style="margin-top: 8px; color: #7f8c8d;">Your appointments are automatically synced to your Google Calendar.</p>
+                        </div>
+                    {% else %}
+                        <div class="calendar-status">
+                            <i class="fas fa-calendar" style="color: #2196F3;"></i>
+                            <strong style="color: #2196F3;"> Connect Your Google Calendar</strong>
+                            <p style="margin-top: 8px; color: #7f8c8d;">Automatically add appointments to your Google Calendar for better scheduling.</p>
+                        </div>
                     {% endif %}
                 </div>
 
-                <!-- Google Calendar Integration section added here -->
-                <div class="mt-4">
-                    <h4>Google Calendar Integration</h4>
+                <div class="button-group" style="margin-top: 20px;">
+                    {% if role == 'Doctor' %}
+                        <a href="{% url 'doctors:dashboard' %}" class="btn-profile btn-dashboard">
+                            <i class="fas fa-chart-line"></i> Doctor Dashboard
+                        </a>
+                    {% elif role == 'Patient' %}
+                        <a href="{% url 'patients:dashboard' %}" class="btn-profile btn-dashboard">
+                            <i class="fas fa-home"></i> Patient Dashboard
+                        </a>
+                    {% endif %}
+
                     {% if user.google_calendar_token %}
-                        <p>Your Google Calendar is connected.</p>
-                        <a href="#" class="btn btn-warning">Disconnect Calendar</a> <!-- We'll implement this later -->
+                        <a href="#" class="btn-profile btn-calendar disconnected">
+                            <i class="fas fa-times-circle"></i> Disconnect Calendar
+                        </a>
                     {% else %}
-                        <p>Connect your Google Calendar to automatically add appointments.</p>
-                        <a href="{% url 'google_integration:authorize_calendar' %}" class="btn btn-primary">Connect to Google Calendar</a>
+                        <a href="{% url 'google_integration:authorize_calendar' %}" class="btn-profile btn-calendar">
+                            <i class="fas fa-plug"></i> Connect Google Calendar
+                        </a>
                     {% endif %}
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 </div>
 {% endblock %}
