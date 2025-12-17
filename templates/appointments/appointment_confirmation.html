@@ -3,51 +3,297 @@
 
 {% block title %}Appointment Confirmation - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .confirmation-container {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+    }
+
+    .confirmation-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border: none;
+    }
+
+    .confirmation-header {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%),
+                    url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 50px;
+        text-align: center;
+    }
+
+    .confirmation-header h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0 0 10px 0;
+    }
+
+    .success-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        animation: scaleIn 0.6s ease-in-out;
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .confirmation-body {
+        padding: 40px;
+    }
+
+    .success-alert {
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        color: #2e7d32;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #4CAF50;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .success-alert i {
+        font-size: 1.5rem;
+    }
+
+    .details-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .detail-card {
+        background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 4px solid #4CAF50;
+    }
+
+    .detail-card h5 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .detail-card h5 i {
+        color: #4CAF50;
+    }
+
+    .detail-row {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #2c3e50;
+        flex: 0 0 35%;
+    }
+
+    .detail-value {
+        color: #7f8c8d;
+        flex: 1;
+    }
+
+    .calendar-integration {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 4px solid #2196F3;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .calendar-integration i {
+        font-size: 2rem;
+        color: #2196F3;
+    }
+
+    .calendar-text h6 {
+        margin: 0 0 8px 0;
+        color: #1565C0;
+        font-weight: 700;
+    }
+
+    .calendar-text p {
+        margin: 0;
+        color: #0d47a1;
+        font-size: 0.95rem;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .btn-action {
+        flex: 1;
+        min-width: 200px;
+        padding: 14px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-primary-action {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-primary-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+    }
+
+    .btn-secondary-action {
+        background: #e0e0e0;
+        color: #2c3e50;
+    }
+
+    .btn-secondary-action:hover {
+        background: #d0d0d0;
+    }
+
+    @media (max-width: 768px) {
+        .confirmation-header {
+            padding: 30px;
+        }
+
+        .confirmation-body {
+            padding: 25px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-action {
+            min-width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <div class="card">
-            <div class="card-header bg-success text-white">
-                <h2 class="text-center">Appointment Confirmed!</h2>
-            </div>
-            <div class="card-body">
-                <div class="alert alert-success">
-                    Your appointment has been successfully booked and added to your Google Calendar.
-                </div>
-                
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <h5>Appointment Details</h5>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Doctor:</th>
-                                <td>Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <td>{{ appointment.availability_slot.date }}</td>
-                            </tr>
-                            <tr>
-                                <th>Time:</th>
-                                <td>{{ appointment.availability_slot.start_time }} - {{ appointment.availability_slot.end_time }}</td>
-                            </tr>
-                            <tr>
-                                <th>Reason:</th>
-                                <td>{{ appointment.reason }}</td>
-                            </tr>
-                        </table>
+<div class="confirmation-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="confirmation-card">
+                    <!-- Header -->
+                    <div class="confirmation-header">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Appointment Confirmed!</h2>
+                        <p>Your appointment has been successfully booked</p>
                     </div>
-                    <div class="col-md-6">
-                        <h5>Calendar Integration</h5>
-                        <div class="alert alert-info">
-                            This appointment has been automatically added to your Google Calendar.
+
+                    <!-- Body -->
+                    <div class="confirmation-body">
+                        <!-- Success Alert -->
+                        <div class="success-alert">
+                            <i class="fas fa-thumbs-up"></i>
+                            <div>
+                                <strong>Great! Your appointment has been successfully booked.</strong>
+                                <p style="margin: 5px 0 0 0;">All details have been sent to your email, and it's been added to your Google Calendar.</p>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Details -->
+                        <div class="details-section">
+                            <!-- Doctor Information -->
+                            <div class="detail-card">
+                                <h5>
+                                    <i class="fas fa-user-md"></i> Doctor Information
+                                </h5>
+                                <div class="detail-row">
+                                    <span class="detail-label">Doctor:</span>
+                                    <span class="detail-value">Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Specialization:</span>
+                                    <span class="detail-value">{{ appointment.doctor.specialization }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Appointment Details -->
+                            <div class="detail-card">
+                                <h5>
+                                    <i class="fas fa-calendar-check"></i> Appointment Details
+                                </h5>
+                                <div class="detail-row">
+                                    <span class="detail-label">Date:</span>
+                                    <span class="detail-value">{{ appointment.availability_slot.date|date:"l, F d, Y" }}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Time:</span>
+                                    <span class="detail-value">{{ appointment.availability_slot.start_time|time:"g:i A" }} - {{ appointment.availability_slot.end_time|time:"g:i A" }}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Reason:</span>
+                                    <span class="detail-value">{{ appointment.reason|truncatewords:8 }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calendar Integration -->
+                        <div class="calendar-integration">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="calendar-text">
+                                <h6><i class="fas fa-check"></i> Google Calendar Synced</h6>
+                                <p>This appointment has been automatically added to your Google Calendar for easy access.</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <a href="{% url 'patients:dashboard' %}" class="btn-action btn-primary-action">
+                                <i class="fas fa-home"></i> Back to Dashboard
+                            </a>
+                            <a href="{% url 'patients:doctors_list' %}" class="btn-action btn-secondary-action">
+                                <i class="fas fa-search"></i> Find More Doctors
+                            </a>
                         </div>
                     </div>
-                </div>
-                
-                <div class="d-grid gap-2 d-md-flex justify-content-between">
-                    <a href="{% url 'patients:dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
-                    <a href="{% url 'patients:doctors_list' %}" class="btn btn-outline-secondary">Find More Doctors</a>
                 </div>
             </div>
         </div>

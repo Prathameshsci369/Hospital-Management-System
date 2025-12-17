@@ -3,38 +3,271 @@
 
 {% block title %}Book Appointment - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .booking-container {
+        padding: 30px 0;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+    }
+
+    .booking-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .booking-header {
+        background: linear-gradient(135deg, #FF6B6B 0%, #ee5a52 100%),
+                    url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .booking-header h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0 0 15px 0;
+    }
+
+    .booking-header p {
+        margin: 5px 0;
+        opacity: 0.9;
+    }
+
+    .booking-body {
+        padding: 40px;
+    }
+
+    .doctor-info {
+        background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border-left: 4px solid #FF6B6B;
+    }
+
+    .doctor-info h4 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .doctor-detail {
+        display: flex;
+        padding: 8px 0;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .doctor-detail-label {
+        font-weight: 600;
+        color: #FF6B6B;
+        min-width: 100px;
+    }
+
+    .doctor-detail-value {
+        color: #7f8c8d;
+    }
+
+    .slot-info {
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        border-left: 4px solid #4CAF50;
+        text-align: center;
+    }
+
+    .slot-date {
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .slot-time {
+        color: #4CAF50;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control {
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        font-family: inherit;
+    }
+
+    .form-control:focus {
+        border-color: #FF6B6B;
+        box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+        outline: none;
+    }
+
+    .form-control textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-book {
+        flex: 1;
+        padding: 14px;
+        background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-book:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+    }
+
+    .btn-back {
+        flex: 1;
+        padding: 14px;
+        background: #e0e0e0;
+        color: #2c3e50;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #d0d0d0;
+    }
+
+    @media (max-width: 768px) {
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .booking-body {
+            padding: 25px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-header">
-                <h2>Book Appointment</h2>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <h4>Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h4>
-                    <p>{{ doctor.specialization }}</p>
-                    <p>Date: {{ slot.date }}</p>
-                    <p>Time: {{ slot.start_time }} - {{ slot.end_time }}</p>
-                </div>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="reason" class="form-label">Reason for Visit</label>
-                        <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
+<div class="booking-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="booking-card">
+                    <!-- Header -->
+                    <div class="booking-header">
+                        <h2><i class="fas fa-calendar-check"></i> Book Appointment</h2>
+                        <p>Confirm your appointment details</p>
                     </div>
-                    <div class="mb-3">
-                        <label for="notes" class="form-label">Additional Notes</label>
-                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+
+                    <!-- Body -->
+                    <div class="booking-body">
+                        <!-- Doctor Information -->
+                        <div class="doctor-info">
+                            <h4><i class="fas fa-user-md"></i> Doctor Information</h4>
+                            <div class="doctor-detail">
+                                <span class="doctor-detail-label">Name:</span>
+                                <span class="doctor-detail-value">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</span>
+                            </div>
+                            <div class="doctor-detail">
+                                <span class="doctor-detail-label">Specialization:</span>
+                                <span class="doctor-detail-value">{{ doctor.specialization }}</span>
+                            </div>
+                            <div class="doctor-detail">
+                                <span class="doctor-detail-label">Fee:</span>
+                                <span class="doctor-detail-value">${{ doctor.consultation_fee }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Slot Information -->
+                        <div class="slot-info">
+                            <div class="slot-date">
+                                <i class="fas fa-calendar"></i> {{ slot.date|date:"l, F d, Y" }}
+                            </div>
+                            <div class="slot-time">
+                                <i class="fas fa-clock"></i> {{ slot.start_time|time:"g:i A" }} - {{ slot.end_time|time:"g:i A" }}
+                            </div>
+                        </div>
+
+                        <!-- Booking Form -->
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            
+                            <!-- Reason for Visit -->
+                            <div class="form-group">
+                                <label for="reason" class="form-label">
+                                    <i class="fas fa-stethoscope"></i> Reason for Visit
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="reason" 
+                                    name="reason" 
+                                    rows="4" 
+                                    placeholder="Describe your symptoms or reason for appointment"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Additional Notes -->
+                            <div class="form-group">
+                                <label for="notes" class="form-label">
+                                    <i class="fas fa-clipboard"></i> Additional Notes (Optional)
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="notes" 
+                                    name="notes" 
+                                    rows="3" 
+                                    placeholder="Any additional information for the doctor"
+                                ></textarea>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <button type="submit" class="btn-book">
+                                    <i class="fas fa-check-circle"></i> Confirm Booking
+                                </button>
+                                <a href="{% url 'patients:doctor_details' doctor.id %}" class="btn-back">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-                    </div>
-                </form>
-                
-                <div class="mt-3">
-                    <a href="{% url 'patients:doctor_details' doctor.id %}" class="btn btn-secondary">Back to Doctor Details</a>
                 </div>
             </div>
         </div>

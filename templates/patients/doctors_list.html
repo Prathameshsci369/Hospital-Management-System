@@ -3,45 +3,280 @@
 
 {% block title %}Doctors List - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .doctors-container {
+        padding: 30px 0;
+    }
+
+    .doctors-header {
+        background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%),
+                    url('https://images.unsplash.com/photo-1631217314830-4475209468d3?w=1200&h=400&fit=crop') center/cover;
+        background-blend-mode: multiply;
+        color: white;
+        padding: 50px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.2);
+    }
+
+    .doctors-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .search-section {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: #2196F3;
+        box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+        outline: none;
+    }
+
+    .search-btn {
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+    }
+
+    .clear-btn {
+        padding: 12px 30px;
+        background: #e0e0e0;
+        color: #2c3e50;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .clear-btn:hover {
+        background: #d0d0d0;
+    }
+
+    .doctor-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .doctor-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        border-color: #2196F3;
+    }
+
+    .doctor-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 4rem;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .doctor-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1576091160399-4c8bc9c9b298?w=400&h=300&fit=crop') center/cover;
+        opacity: 0.3;
+    }
+
+    .doctor-image i {
+        position: relative;
+        z-index: 2;
+    }
+
+    .doctor-body {
+        padding: 25px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .doctor-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .doctor-spec {
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .doctor-qualification {
+        color: #7f8c8d;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .doctor-experience {
+        color: #7f8c8d;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .doctor-footer {
+        margin-top: auto;
+    }
+
+    .view-details-btn {
+        display: block;
+        padding: 12px;
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .view-details-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+        color: white;
+        text-decoration: none;
+    }
+
+    .no-doctors {
+        text-align: center;
+        padding: 60px 30px;
+        color: #7f8c8d;
+    }
+
+    .no-doctors i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .no-doctors p {
+        font-size: 1.1rem;
+        margin: 10px 0;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h2>Find a Doctor</h2>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <form method="get">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search by specialization" name="specialization" value="{{ specialization }}">
-                            <button class="btn btn-outline-secondary" type="submit">Search</button>
-                            <a href="{% url 'patients:doctors_list' %}" class="btn btn-outline-secondary">Clear</a>
-                        </div>
-                    </form>
-                </div>
-                
-                {% if doctors %}
-                    <div class="row">
-                        {% for doctor in doctors %}
-                            <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
-                                        <p class="card-text">{{ doctor.specialization }}</p>
-                                        <p class="card-text">{{ doctor.qualification }}</p>
-                                        <p class="card-text">Experience: {{ doctor.experience_years }} years</p>
-                                        <a href="{% url 'patients:doctor_details' doctor.id %}" class="btn btn-primary">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p>No doctors found.</p>
-                {% endif %}
-            </div>
-        </div>
+<div class="doctors-container">
+    <!-- Header -->
+    <div class="doctors-header">
+        <h1><i class="fas fa-user-md"></i> Find Your Doctor</h1>
+        <p>Browse through our network of experienced healthcare professionals</p>
     </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <form method="get" class="search-form">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Search by specialization (e.g., Cardiology, Neurology)" 
+                name="specialization" 
+                value="{{ specialization }}"
+                required
+            >
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i> Search
+            </button>
+            <a href="{% url 'patients:doctors_list' %}" class="clear-btn">
+                <i class="fas fa-redo"></i> Clear
+            </a>
+        </form>
+    </div>
+
+    <!-- Doctors Grid -->
+    {% if doctors %}
+        <div class="row g-4">
+            {% for doctor in doctors %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="doctor-card">
+                        <div class="doctor-image">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="doctor-body">
+                            <h5 class="doctor-name">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
+                            <p class="doctor-spec">
+                                <i class="fas fa-heartbeat"></i> {{ doctor.specialization }}
+                            </p>
+                            <p class="doctor-qualification">
+                                <i class="fas fa-certificate"></i> {{ doctor.qualification }}
+                            </p>
+                            <p class="doctor-experience">
+                                <i class="fas fa-clock"></i> {{ doctor.experience_years }} years experience
+                            </p>
+                            <div class="doctor-footer">
+                                <a href="{% url 'patients:doctor_details' doctor.id %}" class="view-details-btn">
+                                    <i class="fas fa-arrow-right"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-doctors">
+            <i class="fas fa-search"></i>
+            <p><strong>No doctors found</strong></p>
+            <p>Try searching with different specialization keywords</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

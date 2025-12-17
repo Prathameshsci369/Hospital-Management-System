@@ -3,61 +3,309 @@
 
 {% block title %}Doctor Details - Hospital Management System{% endblock %}
 
+{% block extra_css %}
+<style>
+    .details-container {
+        padding: 30px 0;
+    }
+
+    .doctor-header {
+        background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .doctor-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .doctor-profile-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .doctor-info-section {
+        padding: 30px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .doctor-info-section:last-child {
+        border-bottom: none;
+    }
+
+    .info-section-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .info-section-title i {
+        color: #2196F3;
+    }
+
+    .info-row {
+        display: flex;
+        padding: 12px 0;
+        align-items: center;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #2c3e50;
+        flex: 0 0 30%;
+    }
+
+    .info-value {
+        color: #7f8c8d;
+        flex: 1;
+    }
+
+    .slots-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .slots-header {
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        padding: 25px;
+    }
+
+    .slots-header h3 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    .slots-body {
+        padding: 30px;
+    }
+
+    .slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .slot-card {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .slot-card:hover {
+        border-color: #2196F3;
+        box-shadow: 0 6px 20px rgba(33, 150, 243, 0.2);
+        transform: translateY(-3px);
+    }
+
+    .slot-date {
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .slot-time {
+        color: #2196F3;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .slot-book-btn {
+        display: inline-block;
+        padding: 8px 15px;
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(33, 150, 243, 0.2);
+    }
+
+    .slot-book-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .no-slots {
+        text-align: center;
+        padding: 50px 30px;
+        color: #7f8c8d;
+    }
+
+    .no-slots i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-action {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-back {
+        background: #e0e0e0;
+        color: #2c3e50;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-back:hover {
+        background: #d0d0d0;
+    }
+
+    @media (max-width: 768px) {
+        .info-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .info-label {
+            flex: 1;
+            margin-bottom: 5px;
+        }
+
+        .slots-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h2>Doctor Details</h2>
+<div class="details-container">
+    <!-- Header -->
+    <div class="doctor-header">
+        <h1><i class="fas fa-user-md"></i> Doctor Details</h1>
+        <p>View profile and book an appointment</p>
+    </div>
+
+    <!-- Doctor Profile -->
+    <div class="doctor-profile-card">
+        <!-- Basic Info -->
+        <div class="doctor-info-section">
+            <div class="info-section-title">
+                <i class="fas fa-user-circle"></i> Personal Information
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5>
-                                <p class="card-text">{{ doctor.specialization }}</p>
-                                <p class="card-text">{{ doctor.qualification }}</p>
-                                <p class="card-text">Experience: {{ doctor.experience_years }} years</p>
-                                <p class="card-text">Consultation Fee: ${{ doctor.consultation_fee }}</p>
+            <div class="info-row">
+                <span class="info-label">Name:</span>
+                <span class="info-value">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ doctor.user.email }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Phone:</span>
+                <span class="info-value">{{ doctor.user.phone_number }}</span>
+            </div>
+        </div>
+
+        <!-- Professional Info -->
+        <div class="doctor-info-section">
+            <div class="info-section-title">
+                <i class="fas fa-stethoscope"></i> Professional Information
+            </div>
+            <div class="info-row">
+                <span class="info-label">Specialization:</span>
+                <span class="info-value">{{ doctor.specialization }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Qualification:</span>
+                <span class="info-value">{{ doctor.qualification }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Experience:</span>
+                <span class="info-value">{{ doctor.experience_years }} years</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Consultation Fee:</span>
+                <span class="info-value" style="font-weight: 700; color: #2196F3;">${{ doctor.consultation_fee }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Slots -->
+    <div class="slots-section">
+        <div class="slots-header">
+            <h3><i class="fas fa-calendar-check"></i> Available Slots</h3>
+        </div>
+        <div class="slots-body">
+            {% if available_slots %}
+                <div class="slots-grid">
+                    {% for slot in available_slots %}
+                        <div class="slot-card">
+                            <div class="slot-date">
+                                <i class="fas fa-calendar"></i> {{ slot.date|date:"M d, Y" }}
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <h4>Available Slots</h4>
-                        {% if available_slots %}
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for slot in available_slots %}
-                                            <tr>
-                                                <td>{{ slot.date }}</td>
-                                                <td>{{ slot.start_time }}</td>
-                                                <td>{{ slot.end_time }}</td>
-                                                <td>
-                                                    <a href="{% url 'appointments:book_appointment' slot.id %}" class="btn btn-primary">Book</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                            <div class="slot-time">
+                                <i class="fas fa-clock"></i> {{ slot.start_time|time:"g:i A" }} - {{ slot.end_time|time:"g:i A" }}
                             </div>
-                        {% else %}
-                            <p>No available slots.</p>
-                        {% endif %}
-                        <div class="mt-3">
-                            <a href="{% url 'patients:doctors_list' %}" class="btn btn-secondary">Back to Doctors List</a>
+                            <a href="{% url 'appointments:book_appointment' slot.id %}" class="slot-book-btn">
+                                <i class="fas fa-check"></i> Book Now
+                            </a>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
+            {% else %}
+                <div class="no-slots">
+                    <i class="fas fa-calendar-times"></i>
+                    <p><strong>No available slots</strong></p>
+                    <p>This doctor currently has no available appointment slots. Please check back later or select another doctor.</p>
+                </div>
+            {% endif %}
+
+            <div class="action-buttons">
+                <a href="{% url 'patients:doctors_list' %}" class="btn-action btn-back">
+                    <i class="fas fa-arrow-left"></i> Back to Doctors List
+                </a>
             </div>
         </div>
     </div>
